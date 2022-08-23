@@ -1,4 +1,4 @@
-export default makeGalleryMarkup (data) {
-let markup = "";
+// export default makeGalleryMarkup (data) {
+// let markup = "";
 
-}
+// }
