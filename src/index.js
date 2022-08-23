@@ -4,7 +4,7 @@ import SimpleLightbox from "simplelightbox";
 const axios = require('axios');
 import refs from "./js-modules/reference";
 import onFetchImages from "./js-modules/onFetch";
-import photoCardTemplate from "./templates/photoCardTemplate.hbs"
+
 
 
 
