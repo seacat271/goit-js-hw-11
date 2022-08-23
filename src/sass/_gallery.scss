@@ -5,12 +5,39 @@ input {
 }
 .gallery {
     display: flex;
-    gap: 15px;
+    gap: 25px;
     flex-wrap: wrap;
-    // flex-basis: 20%;
+    justify-content: center;
+    margin-bottom: 20px;
+
 }
-// .hidden {
-// display: none;
-// }
 
+.load-more.hidden {
+display: none;
+}
 
+.container{
+    width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+  .search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+
+  .info {
+
+    padding: 10px;
+  }
+  .load-more {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .photo-card {
+    background-color: rgb(243, 237, 237);
+    border-radius: 4px;
+  }

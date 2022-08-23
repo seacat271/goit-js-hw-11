@@ -18,5 +18,16 @@ body {
   
   img {
     display: block;
+    width: 270px;
+    height: 180px;
+    object-fit: cover;
   }
   
+  b {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  p{
+margin: 0;
+line-height: 30px;
+  }

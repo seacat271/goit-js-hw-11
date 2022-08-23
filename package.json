@@ -33,3 +33,18 @@
   },
   "browserslist": "> 0.5%, last 2 versions, not dead"
 }
+
+
+{
+  "extends": [
+    "@parcel/config-default"
+  ],
+  "reporters": [
+    "...",
+    "parcel-reporter-clean-dist"
+  ],
+  "transformers": {
+  "*.hbs": ["parcel-transformer-hbs"]
+}
+
+}
