@@ -8,7 +8,7 @@ Notiflix.Notify.init({
     borderRadius: '10px',
     });
 
-export {showEmptyMessage, showEndedMessage}
+export {showEmptyMessage, showEndedMessage, showTotalMessage}
      
     function showEmptyMessage() {
         const Empty = "Sorry, there are no images matching your search query. Please try again.";
@@ -20,6 +20,13 @@ export {showEmptyMessage, showEndedMessage}
         const Ended = "We're sorry, but you've reached the end of search results.";
         return Notiflix.Notify.info(Ended)
     }
+
+
+    function showTotalMessage(total) {
+        const Total = `Hooray! We found ${total} images.`;
+        return Notiflix.Notify.success(Total)
+    }
+
     
 
 

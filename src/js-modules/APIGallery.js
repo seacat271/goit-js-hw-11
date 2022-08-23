@@ -26,4 +26,5 @@ export default class PixabayGallery {
     resetPage () {
         this.page = 1;
     }
+
 }
