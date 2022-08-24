@@ -1,5 +1,3 @@
-
-
 import Notiflix from 'notiflix';
 
 Notiflix.Notify.init({
@@ -13,7 +11,6 @@ export {showEmptyMessage, showEndedMessage, showTotalMessage, showErrorMessage}
     function showEmptyMessage() {
         const empty = "Sorry, there are no images matching your search query. Please try again.";
         return Notiflix.Notify.info(empty)
-     
     }
     
     function showEndedMessage() {
@@ -27,7 +24,7 @@ export {showEmptyMessage, showEndedMessage, showTotalMessage, showErrorMessage}
         return Notiflix.Notify.success(totalMessage)
     }
 
-    function showErrorMessage(total) {
+    function showErrorMessage() {
         const error = "Ooops, something went wrong. Try again";
         return Notiflix.Notify.failure(error)
     }

@@ -1,10 +1,5 @@
 import axios from "axios";
 
-
-
-
-
-
 export default class PixabayGallery {
     #API_KEY = "29127762-27ecb80fc89c6fc72c273a026";
     
@@ -16,18 +11,15 @@ export default class PixabayGallery {
             params: {
             key: this.#API_KEY,
             per_page: this.perPage,
-        }}
-        
-
+            image_type: "photo",
+            orientation: "horizontal",
+            safesearch: true,
+            }
+        }
     }
     
-  
-
-    
-
     async getFetchImages(){
         const BASE_URL = "https://pixabay.com/api/"
-       
         try {
             const response = await axios.get(`${BASE_URL}?page=${this.page}&q=${this.galleryQuery}`, this.requestConfig)
             if(response.status === 200) this.page += 1;
@@ -52,7 +44,4 @@ export default class PixabayGallery {
     resetPage () {
         this.page = 1;
     }
-
-    
-
 }

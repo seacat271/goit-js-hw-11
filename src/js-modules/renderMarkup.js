@@ -2,14 +2,13 @@ import refs from "./reference";
 import photoCardTemplate from "../templates/photoCard.hbs"
 import photoCardTemplateWithoutLazyLoad from "../templates/photoCardWithoutLazyLoad.hbs"
 export {makeGalleryMarkup, lazyLoadLibraryAdd}
+
 function makeGalleryMarkup (data) {
-
 refs.gallery.insertAdjacentHTML("beforeend", lazyLoadMarkupFixed(data))
-
 }
 
 function lazyLoadMarkupFixed (data) {
-    if ("loading" in HTMLImageElement.prototype) return photoCardTemplate(data)
+    if ("loading" in HTMLImageElement.prototype) return photoCardTemplate(data);
 return photoCardTemplateWithoutLazyLoad (data)
 }
 
