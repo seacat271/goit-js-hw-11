@@ -5,7 +5,7 @@ import refs from "./js-modules/reference";
 
 import {makeGalleryMarkup, lazyLoadLibraryAdd} from "./js-modules/renderMarkup";
 import PixabayGallery from "./js-modules/APIGallery"
-import {showEmptyMessage, showEndedMessage, showTotalMessage} from "./js-modules/messages"
+import {showEmptyMessage, showEndedMessage, showTotalMessage, showErrorMessage} from "./js-modules/messages"
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
@@ -22,37 +22,41 @@ const imageGallery = new SimpleLightbox('.gallery a', {
 const pixabayGallery = new PixabayGallery()
 refs.form.addEventListener("submit", onSubmitForm);
 
-function onSubmitForm(event) {
+async function onSubmitForm(event) {
     event.preventDefault()
     if(!refs.loadMoreBtn.classList.contains("hidden")) refs.loadMoreBtn.classList.add("hidden");
 
     pixabayGallery.query = event.currentTarget.searchQuery.value;
     pixabayGallery.resetPage();
-    pixabayGallery.onFetchImages().then(data => {
+    try {
+        const data = await pixabayGallery.getFetchImages()
         refs.form.firstElementChild.focus()
-        
-        
         resetHTML()
-
-        if (data.hits.length !== 0) {
-            showTotalMessage(data.totalHits)
-            softRenderedMarkup(data.hits, 0.3)
-          
-            if(refs.loadMoreBtn.classList.contains("hidden")) refs.loadMoreBtn.classList.remove("hidden");
-            
-        } 
-        else {
-            showEmptyMessage()}
-        }).catch(console.log)
+    
+            if (data.hits.length !== 0) {
+                showTotalMessage(data.totalHits)
+                softRenderedMarkup(data.hits, 0.3)
+                if(refs.loadMoreBtn.classList.contains("hidden")) refs.loadMoreBtn.classList.remove("hidden");
+            } 
+            else {
+                showEmptyMessage()}
+    } catch {
+        showErrorMessage()
+        return data = {};
+    }
 }
 
 refs.loadMoreBtn.addEventListener("click", onClickLoadMoreBtn);
 
-function onClickLoadMoreBtn (event) {
-    pixabayGallery.onFetchImages().then(({hits}) => {
+async function onClickLoadMoreBtn (event) {
+    try {
+        const {hits} = await pixabayGallery.getFetchImages()
         softRenderedMarkup (hits, 2)
-    }).catch(console.log)
-}
+    } catch {
+        showErrorMessage()
+        return hits = [];
+    }
+} 
 
 function resetHTML () {
     refs.gallery.innerHTML = "";
@@ -75,5 +79,10 @@ function softRenderedMarkup (data, distance) {
     smoothyScroll (distance)
 }
 
-
+// let infScroll = new InfiniteScroll( refs.gallery, {
+    
+//     path: '.pagination__next',
+//     append: '.post',
+//     history: false,
+//   });
 
