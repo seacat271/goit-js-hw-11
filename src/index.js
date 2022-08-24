@@ -1,6 +1,6 @@
 
 
-const axios = require('axios');
+
 import refs from "./js-modules/reference";
 
 import {makeGalleryMarkup, lazyLoadLibraryAdd} from "./js-modules/renderMarkup";
@@ -30,12 +30,14 @@ async function onSubmitForm(event) {
     pixabayGallery.resetPage();
     try {
         const data = await pixabayGallery.getFetchImages()
+        
         refs.form.firstElementChild.focus()
         resetHTML()
     
             if (data.hits.length !== 0) {
                 showTotalMessage(data.totalHits)
                 softRenderedMarkup(data.hits, 0.3)
+                if ((pixabayGallery.page - 1) === Math.ceil(data.totalHits / pixabayGallery.perPage)) onloadLastImage();
                 if(refs.loadMoreBtn.classList.contains("hidden")) refs.loadMoreBtn.classList.remove("hidden");
             } 
             else {
@@ -50,11 +52,15 @@ refs.loadMoreBtn.addEventListener("click", onClickLoadMoreBtn);
 
 async function onClickLoadMoreBtn (event) {
     try {
-        const {hits} = await pixabayGallery.getFetchImages()
-        softRenderedMarkup (hits, 2)
+        const data = await pixabayGallery.getFetchImages()
+       
+        
+        softRenderedMarkup (data.hits, 2)
+    if ((pixabayGallery.page - 1) === Math.ceil(data.totalHits / pixabayGallery.perPage)) onloadLastImage();
+        
     } catch {
         showErrorMessage()
-        return hits = [];
+        return data = {};
     }
 } 
 
@@ -85,4 +91,7 @@ function softRenderedMarkup (data, distance) {
 //     append: '.post',
 //     history: false,
 //   });
-
+function onloadLastImage () {
+    showEndedMessage()
+    if(!refs.loadMoreBtn.classList.contains("hidden")) refs.loadMoreBtn.classList.add("hidden");
+}

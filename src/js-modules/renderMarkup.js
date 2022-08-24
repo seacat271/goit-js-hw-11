@@ -1,38 +1,16 @@
 import refs from "./reference";
+import photoCardTemplate from "../templates/photoCard.hbs"
+import photoCardTemplateWithoutLazyLoad from "../templates/photoCardWithoutLazyLoad.hbs"
 export {makeGalleryMarkup, lazyLoadLibraryAdd}
 function makeGalleryMarkup (data) {
-let markup = "";
-data.forEach(({webformatURL, largeImageURL, tags, likes, comments, downloads, views}) => {
- 
-    markup += `<a href=${largeImageURL}>
-    <div class="photo-card">
-    <img class="lazyload" ${lazyLoadMarkupFixed(webformatURL)} alt="${tags}" loading="lazy"/>
-    <div class="info">
-      <p class="info-item">
-        <b>Likes: ${likes}</b>
-      </p>
-      <p class="info-item">
-        <b>Views: ${views}</b>
-      </p>
-      <p class="info-item">
-        <b>Comments: ${comments}</b>
-      </p>
-      <p class="info-item">
-        <b>Downloads: ${downloads}</b>
-      </p>
-    </div>
-  </div>
-  </a>`
-})
 
-refs.gallery.insertAdjacentHTML("beforeend", markup)
+refs.gallery.insertAdjacentHTML("beforeend", lazyLoadMarkupFixed(data))
 
 }
 
-function lazyLoadMarkupFixed (url) {
-    if ("loading" in HTMLImageElement.prototype) return `src="${url}"`
-return `data-src="${url}"`
-
+function lazyLoadMarkupFixed (data) {
+    if ("loading" in HTMLImageElement.prototype) return photoCardTemplate(data)
+return photoCardTemplateWithoutLazyLoad (data)
 }
 
 function lazyLoadLibraryAdd () {
@@ -44,7 +22,6 @@ function lazyLoadLibraryAdd () {
         scriptLazyLib.referrerPolicy = "no-referrer";
         refs.body.insertAdjacentElement("beforeend", scriptLazyLib)
     }
-
 }
 
 

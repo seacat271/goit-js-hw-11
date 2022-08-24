@@ -4,18 +4,26 @@ import axios from "axios";
 
 
 
+
 export default class PixabayGallery {
+    #API_KEY = "29127762-27ecb80fc89c6fc72c273a026";
+    
     constructor() {
         this.galleryQuery = "";
         this.page = 1;
+        this.perPage = 40;
+        this.requestConfig = {
+            params: {
+            key: this.#API_KEY,
+            per_page: this.perPage,
+        }}
+        
 
     }
+    
+  
 
-    requestConfig = {
-        params: {
-        key: "29127762-27ecb80fc89c6fc72c273a026",
-        per_page: 40,
-    }}
+    
 
     async getFetchImages(){
         const BASE_URL = "https://pixabay.com/api/"
@@ -38,10 +46,13 @@ export default class PixabayGallery {
 
     set query (newQ){
         this.galleryQuery = newQ;
+        this.requestConfig.params.q = newQ;
     }
 
     resetPage () {
         this.page = 1;
     }
+
+    
 
 }
