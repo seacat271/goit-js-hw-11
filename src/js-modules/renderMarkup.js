@@ -1,18 +1,12 @@
 import refs from "./reference";
 import photoCardTemplate from "../templates/photoCard.hbs"
 import photoCardTemplateWithoutLazyLoad from "../templates/photoCardWithoutLazyLoad.hbs"
-export {makeGalleryMarkup, lazyLoadLibraryAdd}
-
-function makeGalleryMarkup (data) {
-refs.gallery.insertAdjacentHTML("beforeend", lazyLoadMarkupFixed(data))
+export default function makeGalleryMarkup (data) {
+    refs.gallery.insertAdjacentHTML("beforeend", lazyLoadMarkupTemplate(data))
 }
 
-function lazyLoadMarkupFixed (data) {
-    if ("loading" in HTMLImageElement.prototype) return photoCardTemplate(data);
-return photoCardTemplateWithoutLazyLoad (data)
-}
 
-function lazyLoadLibraryAdd () {
+function lazyLoadMarkupTemplate (data) {
     if (!"loading" in HTMLImageElement.prototype) {
         const scriptLazyLib = document.createElement("script");
         scriptLazyLib.src = "https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js";
@@ -20,7 +14,9 @@ function lazyLoadLibraryAdd () {
         scriptLazyLib.crossOrigin = "anonymous";
         scriptLazyLib.referrerPolicy = "no-referrer";
         refs.body.insertAdjacentElement("beforeend", scriptLazyLib)
+        return photoCardTemplateWithoutLazyLoad (data)
     }
+    return photoCardTemplate(data)
 }
 
 

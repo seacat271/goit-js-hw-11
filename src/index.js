@@ -1,11 +1,9 @@
 import refs from "./js-modules/reference";
-import {makeGalleryMarkup, lazyLoadLibraryAdd} from "./js-modules/renderMarkup";
+import makeGalleryMarkup from "./js-modules/renderMarkup";
 import PixabayGallery from "./js-modules/APIGallery"
 import {showEmptyMessage, showEndedMessage, showTotalMessage, showErrorMessage} from "./js-modules/messages"
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-
-lazyLoadLibraryAdd()
 
 const imageGallery = new SimpleLightbox('.gallery a', {
     captionsData : "alt",
